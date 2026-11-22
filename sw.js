@@ -1,5 +1,5 @@
 // Øk versjonsnummeret når du publiserer endringer, så får brukerne ny versjon.
-const CACHE = 'sudoku-v2';
+const CACHE = 'sudoku-v3';
 const ASSETS = [
   './',
   './index.html',

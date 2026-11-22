@@ -132,7 +132,8 @@ svg {
 .board {
   container-type: inline-size;
   display: grid;
-  grid-template-columns: repeat(9, 1fr);
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+  grid-template-rows: repeat(9, minmax(0, 1fr));
   aspect-ratio: 1;
   width: 100%;
   background: var(--surface);
