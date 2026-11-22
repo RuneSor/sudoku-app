@@ -1,5 +1,5 @@
 // Øk versjonsnummeret når du publiserer endringer, så får brukerne ny versjon.
-const CACHE = 'sudoku-v1';
+const CACHE = 'sudoku-v2';
 const ASSETS = [
   './',
   './index.html',
@@ -10,6 +10,7 @@ const ASSETS = [
   './icons/apple-touch-icon.png',
   './icons/icon-192.png',
   './icons/icon-512.png',
+  './icons/icon-maskable-512.png',
 ];
 
 self.addEventListener('install', (e) => {
