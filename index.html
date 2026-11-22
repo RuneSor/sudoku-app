@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Sudoku</title>
+  <meta name="description" content="Sudoku med tilfeldige brett og valg av vanskelighetsgrad.">
+  <meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#14171f" media="(prefers-color-scheme: dark)">
+
+  <!-- iOS: hjem-skjerm-app -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Sudoku">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+
+  <link rel="icon" type="image/png" href="icons/icon-192.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <header class="top">
+      <h1>Sudoku</h1>
+      <div class="top-actions">
+        <button id="btn-stats" class="icon-btn" aria-label="Statistikk og innstillinger">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+        </button>
+        <button id="btn-new" class="pill">Nytt spill</button>
+      </div>
+    </header>
+
+    <section class="status">
+      <span id="diff-label" class="chip">Middels</span>
+      <span id="mistakes">Feil: 0</span>
+      <button id="btn-pause" class="timer" aria-label="Pause">
+        <span id="timer">00:00</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12M15 6v12"/></svg>
+      </button>
+    </section>
+
+    <div class="board-wrap">
+      <div id="board" class="board" role="grid" aria-label="Sudoku-brett"></div>
+      <div id="overlay" class="overlay" hidden>
+        <p id="overlay-text">Pause</p>
+        <button id="btn-resume" class="pill">Fortsett</button>
+      </div>
+    </div>
+
+    <section class="tools">
+      <button data-tool="undo">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg>
+        <span>Angre</span>
+      </button>
+      <button data-tool="erase">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 20H8.5L3.6 15.1a2 2 0 0 1 0-2.8L13 3l8 8-9 9"/><path d="m8 10 7 7"/></svg>
+        <span>Slett</span>
+      </button>
+      <button data-tool="notes" id="btn-notes">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 3a2.8 2.8 0 0 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+        <span>Notater</span>
+        <b class="badge" id="notes-badge">AV</b>
+      </button>
+      <button data-tool="hint">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0 0 12 2Z"/></svg>
+        <span>Hint</span>
+      </button>
+    </section>
+
+    <section id="numpad" class="numpad" aria-label="Tall"></section>
+  </main>
+
+  <!-- Nytt spill -->
+  <dialog id="dlg-new">
+    <form method="dialog">
+      <h2>Nytt spill</h2>
+      <p class="muted">Velg vanskelighetsgrad</p>
+      <div class="diff-list">
+        <button value="easy">Lett</button>
+        <button value="medium">Middels</button>
+        <button value="hard">Vanskelig</button>
+        <button value="expert">Ekspert</button>
+      </div>
+      <button value="cancel" class="link">Avbryt</button>
+    </form>
+  </dialog>
+
+  <!-- Løst -->
+  <dialog id="dlg-win">
+    <form method="dialog">
+      <h2>Løst! 🎉</h2>
+      <div id="win-body"></div>
+      <div class="row">
+        <button value="close" class="link">Se brettet</button>
+        <button value="new" class="pill">Nytt spill</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Statistikk og innstillinger -->
+  <dialog id="dlg-stats">
+    <form method="dialog">
+      <h2>Statistikk</h2>
+      <table class="stats">
+        <thead><tr><th></th><th>Spilt</th><th>Løst</th><th>Beste</th><th>Snitt</th></tr></thead>
+        <tbody id="stats-body"></tbody>
+      </table>
+
+      <h2>Innstillinger</h2>
+      <label class="toggle"><input type="checkbox" id="set-errors"> <span>Vis feil med en gang</span></label>
+      <label class="toggle"><input type="checkbox" id="set-autonotes"> <span>Fjern notater automatisk</span></label>
+      <label class="toggle"><input type="checkbox" id="set-highlight"> <span>Marker like tall</span></label>
+
+      <div class="row">
+        <button type="button" id="btn-reset-stats" class="link danger">Nullstill statistikk</button>
+        <button value="close" class="pill">Lukk</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="sudoku.js"></script>
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+    }
+  </script>
+</body>
+</html>
