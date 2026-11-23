@@ -2,6 +2,23 @@
 
 Sudoku som PWA (ren HTML/CSS/JS), laget for GitHub Pages og «Legg til på Hjem-skjerm» på iPhone/iPad.
 
+**▶ Spill nå: [runesor.github.io/sudoku-app](https://runesor.github.io/sudoku-app/)**
+
+<table>
+  <tr>
+    <td><img src="screenshots/game-light.png" width="220" alt="Spill i lys modus med notater og markering av like tall"></td>
+    <td><img src="screenshots/game-dark.png" width="220" alt="Spill i mørk modus"></td>
+    <td><img src="screenshots/new-game-light.png" width="220" alt="Velg vanskelighetsgrad"></td>
+    <td><img src="screenshots/stats-light.png" width="220" alt="Statistikk og innstillinger"></td>
+  </tr>
+  <tr>
+    <td align="center">Lys modus</td>
+    <td align="center">Mørk modus</td>
+    <td align="center">Nytt spill</td>
+    <td align="center">Statistikk</td>
+  </tr>
+</table>
+
 ## Funksjoner
 
 - Tilfeldige brett med entydig løsning, fire nivåer: Lett (40 gitte tall), Middels (32), Vanskelig (27), Ekspert (~23–24)
@@ -26,6 +43,7 @@ Sudoku som PWA (ren HTML/CSS/JS), laget for GitHub Pages og «Legg til på Hjem-
 | `manifest.webmanifest` | PWA-manifest |
 | `icons/` | App-ikoner |
 | `.nojekyll` | Hindrer at GitHub Pages kjører Jekyll |
+| `screenshots/` | Skjermbilder til README (ikke del av appen) |
 
 ## Publisering på GitHub Pages
 
@@ -39,7 +57,7 @@ git push -u origin main
 ```
 
 Deretter på GitHub: **Settings → Pages → Build and deployment → Source: Deploy from a branch → `main` / `(root)`**.
-Appen blir tilgjengelig på `https://<brukernavn>.github.io/sudoku/`.
+Appen blir tilgjengelig på `https://<brukernavn>.github.io/sudoku/` – denne versjonen ligger på <https://runesor.github.io/sudoku-app/>.
 
 Alle stier er relative, så det fungerer i en undermappe uten endringer.
 
